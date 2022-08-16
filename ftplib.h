@@ -65,6 +65,9 @@ typedef struct x509_st X509;
 #define _FTPLIB_SSL_CLIENT_METHOD_ TLSv1_2_client_method
 #endif
 
+#include <vector>
+#include <string>
+
 using namespace std;
 
 //SSL
@@ -168,6 +171,8 @@ public:
   int Rmdir(const char *path);
   int Pwd(char *path, int max);
   int Nlst(const char *outputfile, const char *path);
+  int NlstEx(const char *outputfile, const char *path,vector<string> &result);
+  int Listing(bool full, const char *path, char *result);
   int Dir(const char *outputfile, const char *path);
   int Size(const char *path, int *size, transfermode mode);
   int ModDate(const char *path, char *dt, int max);
@@ -198,6 +203,7 @@ private:
   ftphandle* mp_ftphandle;
 
   int FtpXfer(const char *localfile, const char *path, ftphandle *nControl, accesstype type, transfermode mode);
+  int FtpXferEx(const char *localfile, const char *path, ftphandle *nControl, accesstype type, transfermode mode, vector<string> &result, bool extended);
   int FtpOpenPasv(ftphandle *nControl, ftphandle **nData, transfermode mode, int dir, char *cmd);
   int FtpSendCmd(const char *cmd, char expresp, ftphandle *nControl);
   int FtpAcceptConnection(ftphandle *nData, ftphandle *nControl);
